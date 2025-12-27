@@ -1,0 +1,11 @@
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\bin\Debug\net10.0\ProductCatalog.Service.deps.json
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\bin\Debug\net10.0\ProductCatalog.Service.dll
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\bin\Debug\net10.0\ProductCatalog.Service.pdb
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.AssemblyInfoInputs.cache
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.AssemblyInfo.cs
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.csproj.CoreCompileInputs.cache
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.dll
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\refint\ProductCatalog.Service.dll
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.pdb
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ref\ProductCatalog.Service.dll
