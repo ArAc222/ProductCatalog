@@ -9,3 +9,7 @@ C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net1
 C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\refint\ProductCatalog.Service.dll
 C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.pdb
 C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ref\ProductCatalog.Service.dll
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\bin\Debug\net10.0\ProductCatalog.Service.runtimeconfig.json
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.csproj.AssemblyReference.cache
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.sourcelink.json
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.Service\obj\Debug\net10.0\ProductCatalog.Service.genruntimeconfig.cache
