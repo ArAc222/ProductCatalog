@@ -11,7 +11,7 @@ namespace ProductCatalog.Service.Entities
         public required string Name { get; set; }
 
         [Range(0, double.MaxValue)] 
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }

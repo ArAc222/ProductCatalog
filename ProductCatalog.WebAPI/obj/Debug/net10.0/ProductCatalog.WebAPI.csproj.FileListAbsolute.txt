@@ -76,3 +76,6 @@ C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.WebAPI\bin\Debug\net10
 C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.WebAPI\bin\Debug\net10.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.WebAPI\bin\Debug\net10.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.WebAPI\obj\Debug\net10.0\ProductCatalog.WebAPI.sourcelink.json
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.WebAPI\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.WebAPI\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Luxyz\source\repos\ProductCatalog\ProductCatalog.WebAPI\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll

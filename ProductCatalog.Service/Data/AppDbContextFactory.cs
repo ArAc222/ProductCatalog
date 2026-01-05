@@ -10,7 +10,7 @@ namespace ProductCatalog.Service.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ProductCatalogDb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ProductCatalogDb;Trusted_Connection=True;");
 
             return new AppDbContext(optionsBuilder.Options);
         }
