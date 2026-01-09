@@ -14,9 +14,71 @@ namespace ProductCatalog.Service.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<(IEnumerable<Product> Items, int TotalItems)> GetAllAsync
+            (   int? categoryId,
+                decimal? minPrice,
+                decimal? maxPrice,
+                bool? isActive,
+                string? sortBy,
+                int page,
+                int pageSize
+            )
         {
-            return await _context.Products.ToListAsync();
+            //filtering
+            var query = _context.Products.AsQueryable();
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= maxPrice.Value);
+            }
+
+            if (isActive.HasValue)
+            {
+                query = query.Where(p => p.IsActive);
+            }
+
+            //sorting
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.ToLower())
+                {
+                    case "price":
+                        query = query.OrderBy(p =>  p.Price);
+                        break;
+                    case "name":
+                        query = query.OrderBy(p => p.Name);
+                        break;
+                    case "createdat":
+                        query = query.OrderBy(p => p.CreatedAt);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //paging
+            page = page < 1 ? 1 : page;
+            pageSize = pageSize < 1 ? 10 : pageSize;
+
+            int TotalItems = await query.CountAsync();
+
+            int skip = (page - 1) * pageSize;
+            var items = await query.Skip(skip)
+                                   .Take(pageSize)
+                                   .ToListAsync();
+
+            return (items, TotalItems);
+
         }
 
         public async Task<Product?> GetByIdAsync(int id)

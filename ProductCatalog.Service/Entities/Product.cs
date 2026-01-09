@@ -9,8 +9,6 @@ namespace ProductCatalog.Service.Entities
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-
-        [Range(0, double.MaxValue)] 
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
         public bool IsActive { get; set; }
