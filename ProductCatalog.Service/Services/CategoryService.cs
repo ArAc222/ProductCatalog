@@ -7,49 +7,61 @@ namespace ProductCatalog.Service.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext context;
 
         public CategoryService(AppDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public async Task<IEnumerable<ProductCategory>> GetAllAsync()
+        public async Task<IEnumerable<ProductCategory>> GetAllCategoriesAsync()
         {
-            return await _context.Categories.ToListAsync();
+            return await context.Categories.ToListAsync();
         }
 
-        public async Task<ProductCategory?> GetByIdAsync(int id)
+        public async Task<ProductCategory?> GetCategoryByIdAsync(int id)
         {
-            return await _context.Categories.FindAsync(id);
+            return await context.Categories.FindAsync(id);
         }
 
-        public async Task<ProductCategory> CreateAsync(ProductCategory category)
+        public async Task<ProductCategory> CreateCategoryAsync(ProductCategory category)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+            context.Categories.Add(category);
+
+            await context.SaveChangesAsync();
+
             return category;
         }
 
-        public async Task<bool> UpdateAsync(ProductCategory category)
+        public async Task<bool> UpdateCategoryAsync(ProductCategory category)
         {
-            var exists = await _context.Categories.AnyAsync(c => c.Id == category.Id);
-            if (!exists)
-                return false;
+            var exists = await context.Categories.AnyAsync(c => c.Id == category.Id);
 
-            _context.Categories.Update(category);
-            await _context.SaveChangesAsync();
+            if (!exists)
+            {
+                return false;
+            }
+
+            context.Categories.Update(category);
+
+            await context.SaveChangesAsync();
+
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteCategoryAsync(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-                return false;
+            var category = await context.Categories.FindAsync(id);
 
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            if (category == null)
+            {
+                return false;
+            }
+
+            context.Categories.Remove(category);
+
+            await context.SaveChangesAsync();
+            
             return true;
         }
     }

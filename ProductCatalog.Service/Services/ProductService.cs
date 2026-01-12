@@ -2,58 +2,64 @@
 using ProductCatalog.Service.Data;
 using ProductCatalog.Service.Entities;
 using ProductCatalog.Service.Interfaces;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProductCatalog.Service.Services
 {
     public class ProductService : IProductService
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext context;
 
         public ProductService(AppDbContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        public async Task<(IEnumerable<Product> Items, int TotalItems)> GetAllAsync
+        public async Task<(IEnumerable<Product> Items, int TotalItems)> GetAllProductsAsync
             (   int? categoryId,
                 double? minPrice,
                 double? maxPrice,
                 bool? isActive,
                 bool? inStock,
                 string? sortBy,
-                int page,
+                int pageNumber,
                 int pageSize
             )
         {
             //filtering
-            var query = _context.Products.AsQueryable();
+            var query = context.Products.AsQueryable();
 
             if (categoryId.HasValue)
             {
-                query = query.Where(p => p.CategoryId == categoryId.Value);
+                query = query.Where(product => product.CategoryId == categoryId.Value);
             }
 
             if (minPrice.HasValue)
             {
-                query = query.Where(p => p.Price >= minPrice.Value);
+                query = query.Where(product => product.Price >= minPrice.Value);
             }
 
             if (maxPrice.HasValue)
             {
-                query = query.Where(p => p.Price <= maxPrice.Value);
+                query = query.Where(product => product.Price <= maxPrice.Value);
             }
 
             if (isActive.HasValue)
             {
-                query = query.Where(p => p.IsActive == isActive.Value);
+                query = query.Where(product => product.IsActive == isActive.Value);
             }
 
             if (inStock.HasValue)
             {
                 if (inStock.Value)
-                    query = query.Where(p => p.StockQuantity > 0);
+                {
+                    query = query.Where(product => product.StockQuantity > 0);
+                }
                 else
-                    query = query.Where(p => p.StockQuantity == 0);
+                {
+                    query = query.Where(product => product.StockQuantity == 0);
+                }
             }
 
             //sorting
@@ -62,13 +68,13 @@ namespace ProductCatalog.Service.Services
                 switch (sortBy.ToLower())
                 {
                     case "price":
-                        query = query.OrderBy(p =>  p.Price);
+                        query = query.OrderBy(product => product.Price);
                         break;
                     case "name":
-                        query = query.OrderBy(p => p.Name);
+                        query = query.OrderBy(product => product.Name);
                         break;
                     case "createdat":
-                        query = query.OrderBy(p => p.CreatedAt);
+                        query = query.OrderBy(product => product.CreatedAt);
                         break;
                     default:
                         break;
@@ -76,28 +82,27 @@ namespace ProductCatalog.Service.Services
             }
 
             //paging
-            page = page < 1 ? 1 : page;
+            pageNumber = pageNumber < 1 ? 1 : pageNumber;
             pageSize = pageSize < 1 ? 10 : pageSize;
 
-            int TotalItems = await query.CountAsync();
+            int totalItems = await query.CountAsync();
 
-            int skip = (page - 1) * pageSize;
-            var items = await query.Skip(skip)
-                                   .Take(pageSize)
-                                   .ToListAsync();
+            int numberOfProductsToSkip = (pageNumber - 1) * pageSize;
 
-            return (items, TotalItems);
+            var items = await query.Skip(numberOfProductsToSkip).Take(pageSize).ToListAsync();
+
+            return (items, totalItems);
 
         }
 
-        public async Task<Product?> GetByIdAsync(int id)
+        public async Task<Product?> GetProductByIdAsync(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await context.Products.FindAsync(id);
         }
 
-        public async Task<Product> CreateAsync(Product product)
+        public async Task<Product> CreateProductAsync(Product product)
         {
-            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == product.CategoryId);
+            var categoryExists = await context.Categories.AnyAsync(c => c.Id == product.CategoryId);
 
             if (!categoryExists)
             {
@@ -106,31 +111,42 @@ namespace ProductCatalog.Service.Services
             
             product.CreatedAt = DateTime.UtcNow;
 
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            context.Products.Add(product);
+
+            await context.SaveChangesAsync();
 
             return product;
         }
 
-        public async Task<bool> UpdateAsync(Product product)
+        public async Task<bool> UpdateProductAsync(Product product)
         {
-            var exists = await _context.Products.AnyAsync(p => p.Id == product.Id);
-            if (!exists)
-                return false;
+            var productExists = await context.Products.AnyAsync(p => p.Id == product.Id);
 
-            _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            if (!productExists)
+            {
+                return false;
+            }
+
+            context.Products.Update(product);
+
+            await context.SaveChangesAsync();
+
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteProductAsync(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-                return false;
+            var product = await context.Products.FindAsync(id);
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            if (product == null)
+            {
+                return false;
+            }
+
+            context.Products.Remove(product);
+
+            await context.SaveChangesAsync();
+            
             return true;
         }
     }

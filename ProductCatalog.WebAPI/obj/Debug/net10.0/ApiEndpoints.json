@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.CategoriesController",
-    "Method": "GetAll",
+    "Method": "GetAllCategoriesAsync",
     "RelativePath": "api/categories",
     "HttpMethod": "GET",
     "IsController": true,
@@ -11,14 +11,14 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.CategoriesController",
-    "Method": "Create",
+    "Method": "CreateCategoryAsync",
     "RelativePath": "api/categories",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
+        "Name": "categoryDto",
         "Type": "ProductCatalog.WebAPI.DTOs.Category.CreateCategoryDto",
         "IsRequired": true
       }
@@ -27,7 +27,7 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.CategoriesController",
-    "Method": "GetById",
+    "Method": "GetCategoryByIdAsync",
     "RelativePath": "api/categories/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -43,7 +43,7 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.CategoriesController",
-    "Method": "Update",
+    "Method": "UpdateCategoryAsync",
     "RelativePath": "api/categories/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -55,7 +55,7 @@
         "IsRequired": true
       },
       {
-        "Name": "dto",
+        "Name": "updateCategoryDto",
         "Type": "ProductCatalog.WebAPI.DTOs.Category.UpdateCategoryDto",
         "IsRequired": true
       }
@@ -64,7 +64,7 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.CategoriesController",
-    "Method": "Delete",
+    "Method": "DeleteCategoryAsync",
     "RelativePath": "api/categories/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -80,7 +80,7 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.ProductsController",
-    "Method": "GetAll",
+    "Method": "GetAllProductsAsync",
     "RelativePath": "api/products",
     "HttpMethod": "GET",
     "IsController": true,
@@ -131,14 +131,14 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.ProductsController",
-    "Method": "Create",
+    "Method": "CreateProductAsync",
     "RelativePath": "api/products",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
+        "Name": "createProductDto",
         "Type": "ProductCatalog.WebAPI.DTOs.Product.CreateProductDto",
         "IsRequired": true
       }
@@ -147,7 +147,7 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.ProductsController",
-    "Method": "GetById",
+    "Method": "GetProductByIdAsync",
     "RelativePath": "api/products/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -163,7 +163,7 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.ProductsController",
-    "Method": "Update",
+    "Method": "UpdateProductAsync",
     "RelativePath": "api/products/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -175,7 +175,7 @@
         "IsRequired": true
       },
       {
-        "Name": "dto",
+        "Name": "updateProductDto",
         "Type": "ProductCatalog.WebAPI.DTOs.Product.UpdateProductDto",
         "IsRequired": true
       }
@@ -184,7 +184,7 @@
   },
   {
     "ContainingType": "ProductCatalog.WebAPI.Controllers.ProductsController",
-    "Method": "Delete",
+    "Method": "DeleteProductAsync",
     "RelativePath": "api/products/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,

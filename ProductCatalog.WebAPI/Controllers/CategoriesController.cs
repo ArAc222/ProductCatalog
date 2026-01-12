@@ -9,68 +9,90 @@ namespace ProductCatalog.WebAPI.Controllers
     [Route("api/categories")]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
+        private readonly ICategoryService categoryService;
 
         public CategoriesController(ICategoryService categoryService)
         {
-            _categoryService = categoryService;
+            this.categoryService = categoryService;
         }
 
         // GET /api/categories
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllCategoriesAsync()
         {
-            var categories = await _categoryService.GetAllAsync();
+            var categories = await categoryService.GetAllCategoriesAsync();
+
             return Ok(categories.Select(c => c.ToDto()));
         }
 
         // GET /api/categories/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetCategoryByIdAsync(int id)
         {
-            var category = await _categoryService.GetByIdAsync(id);
-            if (category == null) return NotFound();
+            var category = await categoryService.GetCategoryByIdAsync(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
 
             return Ok(category.ToDto());
         }
 
         // POST /api/categories
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto)
+        public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryDto categoryDto)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
-            var category = dto.ToEntity();
-            var created = await _categoryService.CreateAsync(category);
+            var category = categoryDto.ToEntity();
 
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToDto());
+            var created = await categoryService.CreateCategoryAsync(category);
+
+            return CreatedAtAction(nameof(GetCategoryByIdAsync), new { id = created.Id }, created.ToDto());
         }
 
         // PUT /api/categories/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateCategoryDto dto)
+        public async Task<IActionResult> UpdateCategoryAsync(int id, [FromBody] UpdateCategoryDto updateCategoryDto)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
-            var category = await _categoryService.GetByIdAsync(id);
+            var category = await categoryService.GetCategoryByIdAsync(id);
+            
             if (category == null)
+            {
                 return NotFound();
+            }
 
-            category.UpdateEntity(dto);
-            var updated = await _categoryService.UpdateAsync(category);
-            if (!updated) return StatusCode(500, "Failed to update category");
+            category.UpdateEntity(updateCategoryDto);
+
+            var updated = await categoryService.UpdateCategoryAsync(category);
+
+            if (!updated)
+            {
+                return StatusCode(500, "Failed to update category");
+            }
 
             return NoContent();
         }
 
         // DELETE /api/categories/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteCategoryAsync(int id)
         {
-            var deleted = await _categoryService.DeleteAsync(id);
-            if (!deleted) return NotFound();
+            var deleted = await categoryService.DeleteCategoryAsync(id);
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
 
             return NoContent();
         }

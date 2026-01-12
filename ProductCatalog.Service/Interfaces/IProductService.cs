@@ -4,7 +4,7 @@ namespace ProductCatalog.Service.Interfaces
 {
     public interface IProductService
     {
-        Task<(IEnumerable<Product> Items, int TotalItems)> GetAllAsync(
+        Task<(IEnumerable<Product> Items, int TotalItems)> GetAllProductsAsync(
             int? categoryId,
             double? minPrice,
             double? maxPrice,
@@ -14,9 +14,9 @@ namespace ProductCatalog.Service.Interfaces
             int page,
             int pageSize
         );
-        Task<Product?> GetByIdAsync(int id);
-        Task<Product> CreateAsync(Product product);
-        Task<bool> UpdateAsync(Product product);
-        Task<bool> DeleteAsync(int id);
+        Task<Product?> GetProductByIdAsync(int id);
+        Task<Product> CreateProductAsync(Product product);
+        Task<bool> UpdateProductAsync(Product product);
+        Task<bool> DeleteProductAsync(int id);
     }
 }

@@ -10,16 +10,16 @@ namespace ProductCatalog.WebAPI.Controllers
     [Route("api/products")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly IProductService productService;
 
         public ProductsController(IProductService productService)
         {
-            _productService = productService;
+            this.productService = productService;
         }
 
         // GET /api/products
         [HttpGet]
-        public async Task<IActionResult> GetAll(
+        public async Task<IActionResult> GetAllProductsAsync(
             int? categoryId = null,
             double? minPrice = null,
             double? maxPrice = null,
@@ -30,7 +30,7 @@ namespace ProductCatalog.WebAPI.Controllers
             int pageSize = 10)
         {
 
-            (IEnumerable<Product> items, int totalItems) = await _productService.GetAllAsync(
+            (IEnumerable<Product> items, int totalItems) = await productService.GetAllProductsAsync(
                 categoryId, minPrice, maxPrice, isActive, inStock, sortBy, page, pageSize);
 
             var products = items.Select(p => p.ToDto());
@@ -40,9 +40,10 @@ namespace ProductCatalog.WebAPI.Controllers
 
         // GET /api/products/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetProductByIdAsync(int id)
         {
-            var product = await _productService.GetByIdAsync(id);
+            var product = await productService.GetProductByIdAsync(id);
+
             if (product == null)
             {
                 return NotFound();
@@ -53,40 +54,41 @@ namespace ProductCatalog.WebAPI.Controllers
 
         // POST /api/products
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductDto createProductDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var product = dto.ToEntity();
-            var created = await _productService.CreateAsync(product);
+            var product = createProductDto.ToEntity();
 
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToDto());
+            var createdProduct = await productService.CreateProductAsync(product);
+
+            return StatusCode(201, createdProduct.ToDto());
         }
 
         // PUT /api/products/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateProductDto dto)
+        public async Task<IActionResult> UpdateProductAsync(int id, [FromBody] UpdateProductDto updateProductDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var product = await _productService.GetByIdAsync(id);
+            var product = await productService.GetProductByIdAsync(id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            product.UpdateEntity(dto);
+            product.UpdateEntity(updateProductDto);
 
-            var updated = await _productService.UpdateAsync(product);
+            bool isProductUpdated = await productService.UpdateProductAsync(product);
 
-            if (!updated)
+            if (!isProductUpdated)
             {
                 return StatusCode(500, "Failed to update product");
             }
@@ -96,11 +98,11 @@ namespace ProductCatalog.WebAPI.Controllers
 
         // DELETE /api/products/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteProductAsync(int id)
         {
-            var deleted = await _productService.DeleteAsync(id);
+            bool isDeleted = await productService.DeleteProductAsync(id);
 
-            if (!deleted)
+            if (!isDeleted)
             {
                 return NotFound();
             }
