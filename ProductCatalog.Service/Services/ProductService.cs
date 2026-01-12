@@ -98,19 +98,18 @@ namespace ProductCatalog.Service.Services
         public async Task<Product> CreateAsync(Product product)
         {
             var categoryExists = await _context.Categories.AnyAsync(c => c.Id == product.CategoryId);
-            if (categoryExists)
-            {
-                product.CreatedAt = DateTime.UtcNow;
 
-                _context.Products.Add(product);
-                await _context.SaveChangesAsync();
-                return product;
-            }
-            else
+            if (!categoryExists)
             {
                 throw new KeyNotFoundException($"Category with id {product.CategoryId} does not exist");
             }
+            
+            product.CreatedAt = DateTime.UtcNow;
 
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
+            return product;
         }
 
         public async Task<bool> UpdateAsync(Product product)

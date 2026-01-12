@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProductCatalog.WebAPI.DTOs.CategoryInterfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProductCatalog.WebAPI.DTOs.Category
 {
-    public class CreateCategoryDto
+    public class CreateCategoryDto : ICreateCategoryDto
     {
         [Required]
         public string Name { get; set; } = null!;

@@ -3,6 +3,11 @@ using ProductCatalog.Service.Data;
 using ProductCatalog.Service.Entities;
 using ProductCatalog.Service.Interfaces;
 using ProductCatalog.Service.Services;
+using ProductCatalog.WebAPI.DTOs.Category;
+using ProductCatalog.WebAPI.DTOs.CategoryInterfaces;
+using ProductCatalog.WebAPI.DTOs.Interfaces;
+using ProductCatalog.WebAPI.DTOs.Product;
+using ProductCatalog.WebAPI.DTOs.ProductInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +23,13 @@ builder.Services.AddScoped<IProduct, Product>();
 builder.Services.AddScoped<IProductCategory, ProductCategory>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductDto, ProductDto>();
+builder.Services.AddScoped<ICreateProductDto, CreateProductDto>();
+builder.Services.AddScoped<IUpdateProductDto, UpdateProductDto>();
+builder.Services.AddScoped<ICategoryDto, CategoryDto>();
+builder.Services.AddScoped<ICreateCategoryDto, CreateCategoryDto>();
+builder.Services.AddScoped<IUpdateCategoryDto, UpdateCategoryDto>();
+
 
 var app = builder.Build();
 
