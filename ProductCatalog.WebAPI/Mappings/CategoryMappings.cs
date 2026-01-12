@@ -5,14 +5,14 @@ namespace ProductCatalog.WebAPI.Mappings
 {
     public static class CategoryMappings
     {
-        public static CategoryDto ToDto(this ProductCategory category) => new CategoryDto
+        public static CategoryDto ToDto(this ProductCategory category) => new()
         {
             Id = category.Id,
             Name = category.Name,
             Description = category.Description
         };
 
-        public static ProductCategory ToEntity(this CreateCategoryDto dto) => new ProductCategory
+        public static ProductCategory ToEntity(this CreateCategoryDto dto) => new()
         {
             Name = dto.Name,
             Description = dto.Description

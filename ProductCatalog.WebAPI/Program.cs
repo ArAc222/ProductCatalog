@@ -1,26 +1,47 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductCatalog.Service.Data;
+using ProductCatalog.Service.Entities;
 using ProductCatalog.Service.Interfaces;
 using ProductCatalog.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1️⃣ Controllers
 builder.Services.AddControllers();
 
-// 2️⃣ Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 3️⃣ DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 4️⃣ Services
+builder.Services.AddScoped<IProduct, Product>();
+builder.Services.AddScoped<IProductCategory, ProductCategory>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
+
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exception = context.Features
+            .Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error;
+
+        context.Response.ContentType = "application/json";
+
+        context.Response.StatusCode = exception switch
+        {
+            KeyNotFoundException => StatusCodes.Status404NotFound,
+            _ => StatusCodes.Status500InternalServerError
+        };
+
+        await context.Response.WriteAsJsonAsync(new
+        {
+            error = exception?.Message
+        });
+    });
+});
 
 // 5️⃣ Middleware
 if (app.Environment.IsDevelopment())
@@ -31,6 +52,8 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProductCatalog API V1");
     });
 }
+
+
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

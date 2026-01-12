@@ -16,9 +16,10 @@ namespace ProductCatalog.Service.Services
 
         public async Task<(IEnumerable<Product> Items, int TotalItems)> GetAllAsync
             (   int? categoryId,
-                decimal? minPrice,
-                decimal? maxPrice,
+                double? minPrice,
+                double? maxPrice,
                 bool? isActive,
+                bool? inStock,
                 string? sortBy,
                 int page,
                 int pageSize
@@ -44,7 +45,15 @@ namespace ProductCatalog.Service.Services
 
             if (isActive.HasValue)
             {
-                query = query.Where(p => p.IsActive);
+                query = query.Where(p => p.IsActive == isActive.Value);
+            }
+
+            if (inStock.HasValue)
+            {
+                if (inStock.Value)
+                    query = query.Where(p => p.StockQuantity > 0);
+                else
+                    query = query.Where(p => p.StockQuantity == 0);
             }
 
             //sorting
@@ -88,11 +97,20 @@ namespace ProductCatalog.Service.Services
 
         public async Task<Product> CreateAsync(Product product)
         {
-            product.CreatedAt = DateTime.UtcNow;
+            var categoryExists = await _context.Categories.AnyAsync(c => c.Id == product.CategoryId);
+            if (categoryExists)
+            {
+                product.CreatedAt = DateTime.UtcNow;
 
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return product;
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+                return product;
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Category with id {product.CategoryId} does not exist");
+            }
+
         }
 
         public async Task<bool> UpdateAsync(Product product)

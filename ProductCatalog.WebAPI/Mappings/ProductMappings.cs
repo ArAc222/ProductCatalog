@@ -5,7 +5,7 @@ namespace ProductCatalog.WebAPI.Mappings
 {
     public static class ProductMappings
     {
-        public static ProductDto ToDto(this Product product) => new ProductDto
+        public static ProductDto ToDto(this Product product) => new()
         {
             Id = product.Id,
             Name = product.Name,
@@ -15,7 +15,7 @@ namespace ProductCatalog.WebAPI.Mappings
             CategoryId = product.CategoryId
         };
 
-        public static Product ToEntity(this CreateProductDto dto) => new Product
+        public static Product ToEntity(this CreateProductDto dto) => new()
         {
             Name = dto.Name,
             Price = dto.Price,
