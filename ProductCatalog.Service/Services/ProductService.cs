@@ -108,11 +108,20 @@ namespace ProductCatalog.Service.Services
             {
                 throw new KeyNotFoundException($"Category with id {product.CategoryId} does not exist");
             }
-            
+
+            var existingProduct = await context.Products
+                .FirstOrDefaultAsync(p => p.CategoryId == product.CategoryId && p.Name == product.Name);
+
+            if (existingProduct != null)
+            {
+                existingProduct.StockQuantity += 1;
+                await context.SaveChangesAsync();
+                return existingProduct;
+            }
+
             product.CreatedAt = DateTime.UtcNow;
-
+            product.StockQuantity = 1;
             context.Products.Add(product);
-
             await context.SaveChangesAsync();
 
             return product;

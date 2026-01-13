@@ -396,14 +396,17 @@
             "maximum": 1.7976931348623157E+308,
             "minimum": 0,
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           },
           "stockQuantity": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "isActive": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "categoryId": {
             "type": "integer",

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using ProductCatalog.Service.Interfaces;
 using ProductCatalog.WebAPI.DTOs.Category;
 using ProductCatalog.WebAPI.Mappings;
@@ -50,9 +51,9 @@ namespace ProductCatalog.WebAPI.Controllers
 
             var category = categoryDto.ToEntity();
 
-            var created = await categoryService.CreateCategoryAsync(category);
+            var createdCategory = await categoryService.CreateCategoryAsync(category);
 
-            return CreatedAtAction(nameof(GetCategoryByIdAsync), new { id = created.Id }, created.ToDto());
+            return StatusCode(201, createdCategory.ToDto());
         }
 
         // PUT /api/categories/{id}
