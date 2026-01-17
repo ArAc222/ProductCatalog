@@ -384,7 +384,10 @@
       "UpdateProductDto": {
         "required": [
           "categoryId",
-          "name"
+          "isActive",
+          "name",
+          "price",
+          "stockQuantity"
         ],
         "type": "object",
         "properties": {
@@ -396,17 +399,14 @@
             "maximum": 1.7976931348623157E+308,
             "minimum": 0,
             "type": "number",
-            "format": "double",
-            "nullable": true
+            "format": "double"
           },
           "stockQuantity": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "isActive": {
-            "type": "boolean",
-            "nullable": true
+            "type": "boolean"
           },
           "categoryId": {
             "type": "integer",

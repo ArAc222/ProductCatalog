@@ -26,22 +26,9 @@ namespace ProductCatalog.WebAPI.Mappings
         public static void UpdateEntity(this Product product, UpdateProductDto dto)
         {
             product.Name = dto.Name;
-
-            if (dto.Price.HasValue)
-            {
-                product.Price = dto.Price.Value;
-            }
-
-            if (dto.StockQuantity.HasValue)
-            {
-                product.StockQuantity = dto.StockQuantity.Value;
-            }
-
-            if (dto.IsActive.HasValue)
-            {
-                product.IsActive = dto.IsActive.Value;
-            }
-
+            product.Price = dto.Price;
+            product.StockQuantity = dto.StockQuantity;
+            product.IsActive = dto.IsActive;
             product.CategoryId = dto.CategoryId;
         }
     }

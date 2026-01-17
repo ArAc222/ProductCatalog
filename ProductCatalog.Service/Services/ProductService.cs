@@ -109,23 +109,27 @@ namespace ProductCatalog.Service.Services
                 throw new KeyNotFoundException($"Category with id {product.CategoryId} does not exist");
             }
 
-            var existingProduct = await context.Products
-                .FirstOrDefaultAsync(p => p.CategoryId == product.CategoryId && p.Name == product.Name);
+            var productExists = await context.Products
+                .AnyAsync(p => p.CategoryId == product.CategoryId && p.Name == product.Name);
 
-            if (existingProduct != null)
+            if (productExists)
             {
-                existingProduct.StockQuantity += 1;
-                await context.SaveChangesAsync();
-                return existingProduct;
+                throw new InvalidOperationException($"Product with name '{product.Name}' already exists in this category");
             }
 
             product.CreatedAt = DateTime.UtcNow;
-            product.StockQuantity = 1;
+
+            if (product.StockQuantity == 0)
+            {
+                product.StockQuantity = 1;
+            }
+
             context.Products.Add(product);
             await context.SaveChangesAsync();
 
             return product;
         }
+
 
         public async Task<bool> UpdateProductAsync(Product product)
         {
