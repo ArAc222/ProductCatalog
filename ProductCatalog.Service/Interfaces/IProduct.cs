@@ -9,7 +9,7 @@ namespace ProductCatalog.Service.Interfaces
     {
         int Id { get; set; }
         string Name { get; set; }
-        double Price { get; set; }
+        decimal Price { get; set; }
         int StockQuantity { get; set; }
         bool IsActive { get; set; }
         DateTime CreatedAt { get; set; }

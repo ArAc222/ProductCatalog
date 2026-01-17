@@ -21,8 +21,8 @@ namespace ProductCatalog.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProductsAsync(
             int? categoryId = null,
-            double? minPrice = null,
-            double? maxPrice = null,
+            decimal? minPrice = null,
+            decimal? maxPrice = null,
             bool? isActive = null,
             bool? inStock = null,
             string? sortBy = null,

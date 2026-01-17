@@ -9,7 +9,7 @@ namespace ProductCatalog.WebAPI.DTOs.Product
         public string Name { get; set; } = null!;
 
         [Range(0, double.MaxValue)]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public int CategoryId { get; set; }

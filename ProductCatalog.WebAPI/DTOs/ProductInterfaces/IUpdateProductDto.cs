@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ProductCatalog.Service.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProductCatalog.WebAPI.DTOs.ProductInterfaces
 {
@@ -8,7 +9,7 @@ namespace ProductCatalog.WebAPI.DTOs.ProductInterfaces
         string Name { get; set; }
 
         [Range(0, double.MaxValue)]
-        double? Price { get; set; }
+        decimal? Price { get; set; }
         int? StockQuantity { get; set; }
         bool? IsActive { get; set; }
 

@@ -18,8 +18,8 @@ namespace ProductCatalog.Service.Services
 
         public async Task<(IEnumerable<Product> Items, int TotalItems)> GetAllProductsAsync
             (   int? categoryId,
-                double? minPrice,
-                double? maxPrice,
+                decimal? minPrice,
+                decimal? maxPrice,
                 bool? isActive,
                 bool? inStock,
                 string? sortBy,

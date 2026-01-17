@@ -8,7 +8,7 @@ namespace ProductCatalog.WebAPI.DTOs.ProductInterfaces
         string Name { get; set; }
 
         [Range(0, double.MaxValue)]
-        double Price { get; set; }
+        decimal Price { get; set; }
 
         [Required]
         int CategoryId { get; set; }

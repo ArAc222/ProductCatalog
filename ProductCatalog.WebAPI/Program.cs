@@ -19,16 +19,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IProduct, Product>();
-builder.Services.AddScoped<IProductCategory, ProductCategory>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductDto, ProductDto>();
-builder.Services.AddScoped<ICreateProductDto, CreateProductDto>();
-builder.Services.AddScoped<IUpdateProductDto, UpdateProductDto>();
-builder.Services.AddScoped<ICategoryDto, CategoryDto>();
-builder.Services.AddScoped<ICreateCategoryDto, CreateCategoryDto>();
-builder.Services.AddScoped<IUpdateCategoryDto, UpdateCategoryDto>();
+
 
 
 var app = builder.Build();
